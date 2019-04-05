@@ -23,35 +23,48 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
         header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
+        header("spotify-link")
+        header("apple-link")
+        header("tidal-link")
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
 
     val client = HttpClient(Apache)
-    suspend fun google(): String {
-        var GoogleResponse = client.get<String>("http://www.spotify.com")
-        return GoogleResponse
+
+    suspend fun getContext(url: String): String{
+        return client.get<String>(url)
     }
 
     routing {
         get("/") {
-            call.respondText(google(), contentType = ContentType.Text.Html)
+            call.respondText("hello", contentType = ContentType.Text.Html)
         }
-
-//        get("/html-dsl") {
-//            call.respondHtml {
-//                body {
-//                    h1 { +"HTML" }
-//                    ul {
-//                        for (n in 1..10) {
-//                            li { +"$n" }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        get("/spotify"){
+            println("Spotify link ${call.request.header("spotify-link")}")
+            call.respondText("Spotify link received", contentType = ContentType.Text.Plain)
+            //print(getContext(call.request.header("spotify-link") as String))
+            var htmlAsString = getContext(call.request.header("spotify-link") as String)
+            var htmlList = htmlAsString.split('\n')
+            var removingTitleTagList = htmlList[2].split("<title>", "</title>")
+            var songInfoList = removingTitleTagList[1].split(',')
+            println("Song name: ${songInfoList[0]}, Artist: ${songInfoList[1].split(" a song by ")[1]}" )
+        }
+        get("/apple"){
+            println("Apple link ${call.request.header("apple-link")}")
+            call.respondText("Apple music link received", contentType = ContentType.Text.Plain)
+            var htmlAsString = getContext(call.request.header("apple-link") as String)
+            var htmlList = htmlAsString.split('\n')
+        }
+        get("/tidal"){
+            println("Tidal link ${call.request.header("tidal-link")}")
+            call.respondText("Tidal link received", contentType = ContentType.Text.Plain)
+            var htmlAsString = getContext(call.request.header("tidal-link") as String)
+            var htmlList = htmlAsString.split('\n')
+        }
     }
 }
+
+
 
 
