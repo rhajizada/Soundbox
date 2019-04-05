@@ -42,13 +42,9 @@ fun Application.module(testing: Boolean = false) {
         }
         get("/spotify"){
             println("Spotify link ${call.request.header("spotify-link")}")
-            call.respondText("Spotify link received", contentType = ContentType.Text.Plain)
-            //print(getContext(call.request.header("spotify-link") as String))
-            var htmlAsString = getContext(call.request.header("spotify-link") as String)
-            var htmlList = htmlAsString.split('\n')
-            var removingTitleTagList = htmlList[2].split("<title>", "</title>")
-            var songInfoList = removingTitleTagList[1].split(',')
-            println("Song name: ${songInfoList[0]}, Artist: ${songInfoList[1].split(" a song by ")[1]}" )
+            call.respondText("Spotify link received\n", contentType = ContentType.Text.Plain)
+            var songInfo = getSpotifySongInfo(getContext(call.request.header("spotify-link") as String))
+            println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}" )
         }
         get("/apple"){
             println("Apple link ${call.request.header("apple-link")}")
@@ -63,6 +59,17 @@ fun Application.module(testing: Boolean = false) {
             var htmlList = htmlAsString.split('\n')
         }
     }
+}
+
+fun getSpotifySongInfo(x: String): List<String>{
+    var htmlList = x.split('\n')
+    var removingTitleTagList = htmlList[2].split("<title>", "</title>")
+    var songInfoList = removingTitleTagList[1].split(',')
+    var songInfo: MutableList<String> = mutableListOf<String>()
+    songInfo.add(songInfoList[0])
+    songInfo.add(songInfoList[1].split(" a song by ")[0])
+    //println(htmlList[41])
+    return songInfo
 }
 
 
