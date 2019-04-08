@@ -38,8 +38,14 @@ fun Application.module(testing: Boolean = false) {
 
     suspend fun search(x: List<String>) {
         var spotifySearchLink = "https://www.google.com/search?q=spotify ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
-        println(spotifySearchLink)
-        var spotifySongLin = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+        var appleSearchLink = "https://www.google.com/search?q=apple music ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
+        var tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
+        var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+        var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+        var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+        println("Apple: ${appleSongLink}")
+        println("Spotify: ${spotifySongLink}")
+        println("Tidal: ${tidalSongLink}")
     }
 
     routing {

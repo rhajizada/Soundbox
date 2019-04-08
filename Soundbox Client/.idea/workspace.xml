@@ -192,7 +192,7 @@
       <workItem from="1554420370210" duration="1100000" />
       <workItem from="1554423236127" duration="5617000" />
       <workItem from="1554500697148" duration="199000" />
-      <workItem from="1554500967832" duration="5485000" />
+      <workItem from="1554500967832" duration="5690000" />
     </task>
     <task id="LOCAL-00001" summary="Playing with the Kotlin/JS and learning abilities of Koltin manipulating DOM">
       <created>1551229011392</created>
@@ -226,7 +226,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35988000" />
+    <option name="totallyTimeSpent" value="36193000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
