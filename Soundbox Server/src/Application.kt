@@ -43,7 +43,8 @@ fun Application.module(testing: Boolean = false) {
         var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
-        val linkMap = hashMapOf("Apple" to appleSongLink, "Spotify" to spotifySongLink, "Tidal" to tidalSongLink)
+        var albumArt = (getContext(appleSongLink) as String).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+        val linkMap = hashMapOf("Apple" to appleSongLink, "Spotify" to spotifySongLink, "Tidal" to tidalSongLink, "Song" to x[0], "Artist" to x[1], "Album" to x[2], "Album_Art" to albumArt)
         return linkMap
     }
 
@@ -105,7 +106,7 @@ fun getTidalSongInfo(x: String): MutableList<String>{
     songInfo.add(htmlList[0].split("name")[20].split("calc(33.33vw - 1.5rem), calc(100vw - 3rem)")[1].split(" class=")[0].removeRange(0..6).reversed().removeRange(0..0).reversed().getRidOfWrong()) //Abum name
     return songInfo
 }
-fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&")
+fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
 
 
 

@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3df0640-659e-483a-8b12-c2ae16b6a1ee" name="Default Changelist" comment="Fixed issue with CORS and added support for HTTP get request">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/Soundbox.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/Soundbox.meta.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/root-package.kjsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,7 +33,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1131">
+            <state relative-caret-position="2145">
               <caret line="116" column="91" selection-start-line="116" selection-start-column="91" selection-end-line="116" selection-end-column="91" />
             </state>
           </provider>
@@ -313,7 +308,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1131">
+        <state relative-caret-position="2145">
           <caret line="116" column="91" selection-start-line="116" selection-start-column="91" selection-end-line="116" selection-end-column="91" />
         </state>
       </provider>
