@@ -36,6 +36,12 @@ fun Application.module(testing: Boolean = false) {
         return client.get<String>(url)
     }
 
+    suspend fun search(x: List<String>) {
+        var spotifySearchLink = "https://www.google.com/search?q=spotify ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
+        println(spotifySearchLink)
+        var spotifySongLin = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+    }
+
     routing {
         get("/") {
             call.respondText("hello", contentType = ContentType.Text.Html)
@@ -45,20 +51,24 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("Spotify link received\n", contentType = ContentType.Text.Plain)
             var songInfo = getSpotifySongInfo(getContext(call.request.header("spotify-link") as String))
             println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
+            search(songInfo)
         }
         get("/apple"){
             println("Apple link ${call.request.header("apple-link")}")
             call.respondText("Apple music link received", contentType = ContentType.Text.Plain)
-            var htmlAsString = getContext(call.request.header("apple-link") as String)
-            var htmlList = htmlAsString.split('\n')
+            var songInfo = getAppleSongInfo(getContext(call.request.header("apple-link") as String))
+            println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
+            search(songInfo)
         }
         get("/tidal"){
             println("Tidal link ${call.request.header("tidal-link")}")
             call.respondText("Tidal link received", contentType = ContentType.Text.Plain)
-            var htmlAsString = getContext(call.request.header("tidal-link") as String)
-            var htmlList = htmlAsString.split('\n')
+            var songInfo = getTidalSongInfo(getContext(call.request.header("tidal-link") as String))
+            println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
+            search(songInfo)
         }
     }
+
 }
 
 fun getSpotifySongInfo(x: String): List<String>{
@@ -68,6 +78,24 @@ fun getSpotifySongInfo(x: String): List<String>{
     songInfo.add(htmlList[2].split("<title>", "</title>")[1].split(", a song by ")[1].split(" on Spotify")[0]) // Adding Artist name
     songInfo.add(htmlList[40].split("</a></div></section></div>")[0].split(">")[1]) // Adding album name
     //println(htmlList[41])
+    return songInfo
+}
+
+fun getAppleSongInfo(x: String): List<String>{
+    var htmlList = x.split('\n')
+    var songInfo: MutableList<String> = mutableListOf<String>()
+    songInfo.add(htmlList[18].split("content=")[1].split(" by")[0].removeRange(0,1)) // Song name works
+    songInfo.add(htmlList[18].split("by ")[1].split('"')[0]) // Artist name
+    songInfo.add(htmlList[14].split("listen, ")[1].split(", ${songInfo[1]}")[0]) // Album name testing
+    return  songInfo
+}
+
+fun getTidalSongInfo(x: String): List<String>{
+    var htmlList =x.split('\n')
+    var songInfo: MutableList<String> = mutableListOf<String>()
+    songInfo.add(htmlList[0].split("name")[18].removeRange(0..2).split("description")[0].reversed().removeRange(0..2).reversed()) //Song name
+    songInfo.add(htmlList[0].split("name")[20].split("artist-list-link hover-desktop")[1].split("</a>")[0].removeRange(0..1)) //Artist name
+    songInfo.add(htmlList[0].split("name")[20].split("calc(33.33vw - 1.5rem), calc(100vw - 3rem)")[1].split(" class=")[0].removeRange(0..6).reversed().removeRange(0..0).reversed()) //Abum name
     return songInfo
 }
 
