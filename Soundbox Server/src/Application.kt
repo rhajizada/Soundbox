@@ -36,7 +36,7 @@ fun Application.module(testing: Boolean = false) {
         return client.get<String>(url)
     }
 
-    suspend fun search(x: List<String>):HashMap<String, String> {
+    suspend fun search(x: List<String>):String {
         val spotifySearchLink = "https://www.google.com/search?q=spotify ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
         val appleSearchLink = "https://www.google.com/search?q=apple music ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
         val tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
@@ -44,8 +44,8 @@ fun Application.module(testing: Boolean = false) {
         var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var albumArt = (getContext(appleSongLink) as String).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
-        val linkMap = hashMapOf("Apple" to appleSongLink, "Spotify" to spotifySongLink, "Tidal" to tidalSongLink, "Song" to x[0], "Artist" to x[1], "Album" to x[2], "Album_Art" to albumArt)
-        return linkMap
+        val response = "Song: ${x[0]}\nArtist: ${x[1]}\nAlbum: ${x[2]}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink"
+        return response
     }
 
     routing {
@@ -58,7 +58,7 @@ fun Application.module(testing: Boolean = false) {
             println(songInfo[0].replace("&#039;", "'"))
             println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
             println(search(songInfo))
-            call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
+            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/apple"){
             println("Apple link ${call.request.header("apple-link")}")
@@ -66,14 +66,14 @@ fun Application.module(testing: Boolean = false) {
 
             println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
             println(search(songInfo))
-            call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
+            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/tidal"){
             println("Tidal link ${call.request.header("tidal-link")}")
             var songInfo = getTidalSongInfo(getContext(call.request.header("tidal-link") as String))
             println("Song name: ${songInfo[0]}, Artist: ${songInfo[1]}, Album: ${songInfo[2]}" )
             println(search(songInfo))
-            call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
+            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
     }
 

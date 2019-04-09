@@ -4,29 +4,71 @@
     <meta charset="UTF-8">
     <title>Soundbox</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
 
-<div id="root">
-<div class="card" style="width: 30rem;">
-    <div class="card-body" id="main_card">
-        <h5 class="card-title">Soundbox</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Easily share your favourite songs</h6>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><label for="spotify_input">Spotify</label>
-                <input type="link" class="form-control" id="spotify_input" placeholder=""></li>
-            <li class="list-group-item"><label for="apple_input">Apple Music</label>
-                <input type="link" class="form-control" id="apple_input" placeholder=""></li>
-            <li class="list-group-item"><label for="tidal_input">Tidal</label>
-                <input type="link" class="form-control" id="tidal_input" placeholder=""></li>
-        </ul>
+<!--        <div class="card">-->
+<!--            <input class="form-control form-control-lg mr-sm-2" type="text" id="search" placeholder="Put link here">-->
+<!--            &lt;!&ndash;        <button class="btn btn-outline-success my-2 my-sm-0" id="search_button" type="submit">Search</button>&ndash;&gt;-->
+<!--            -->
+<!--        </div>-->
+
+<div class="container">
+    <h1 align="center">Soundbox</h1>
+    <div class="row">
+        <div class="col-12">
+            <div class="input-group">
+                <input class="form-control border-secondary py-2" type="search" id="search" placeholder="Put link here">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="search_button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<!--        &lt;!&ndash; Actual search box &ndash;&gt;-->
+<!--        <div class="form-group has-search">-->
+<!--            <input class="form-control" type="text" placeholder="Put link here" id="search" aria-label="Search">-->
+<!--            <button class="btn btn-primary" id="search_button" type="submit">Search</button>-->
+<!--        </div>-->
+
+
+        <div class="card" id="song_card" style="width: 22rem;">
+        <img class="card-img-top" id="artwork" src="..." alt="Album Artwork">
+        <div class="card-body">
+            <h5 class="card-title" id="song_info">Song info</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="" id="spotify_link">Spotify Link</a></li>
+            <li class="list-group-item"><a href="" id="apple_link">Apple Link</a></li>
+            <li class="list-group-item"><a href="" id="tidal_link">Tidal Link</a></li>
+        </ul>
+    </div>
 </div>
 
 <!-- Additional CSS control -->
 <style>
-    .card {
+    /*#search_button{*/
+    /*    margin-left:10%;*/
+    /*}*/
+    /*#search{*/
+    /*    width: 150%;*/
+    /*    margin-left: -120%;*/
+    /*    vertical-align: middle;*/
+    /*}*/
+    /*#search_button{*/
+    /*    margin: 0 auto; !* Added *!*/
+    /*    float: none; !* Added *!*/
+    /*    width: 50%;*/
+    /*    margin-top: 10%;*/
+    /*    text-align: center;*/
+    /*}*/
+    #song_card {
         margin: 0 auto; /* Added */
         float: none; /* Added */
         width: 50%;
