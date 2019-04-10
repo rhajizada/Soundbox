@@ -37,13 +37,14 @@ fun Application.module(testing: Boolean = false) {
     }
 
     suspend fun search(x: List<String>):String {
-        val spotifySearchLink = "https://www.google.com/search?q=spotify ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
-        val appleSearchLink = "https://www.google.com/search?q=apple music ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
-        val tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0]}+${x[1]}+${x[2]}".replace(' ', '+')
+        val spotifySearchLink = "https://www.google.com/search?q=spotify ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
+        val appleSearchLink = "https://www.google.com/search?q=apple music ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
+        val tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
+
         var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
-        var albumArt = (getContext(appleSongLink) as String).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+        var albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
         val response = "Song: ${x[0]}\nArtist: ${x[1]}\nAlbum: ${x[2]}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink"
         return response
     }
@@ -107,6 +108,7 @@ fun getTidalSongInfo(x: String): MutableList<String>{
     return songInfo
 }
 fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
+fun String.sanitize(): String =  this.replace("#", "%23")
 
 
 

@@ -8,7 +8,7 @@ var xhttp :dynamic= XMLHttpRequest(); // Adding native JavaScript library for ht
 //val spotify_input = document.getElementById("spotify_input") as HTMLInputElement
 //val apple_input = document.getElementById("apple_input") as HTMLInputElement
 //val tidal_input = document.getElementById("tidal_input") as HTMLInputElement
-val APILink: String = "http://192.168.1.2:8080"
+val APILink: String = "http://localhost:8080"
 
 var search_input = document.getElementById("search") as HTMLInputElement
 val search_button = document.getElementById("search_button") as HTMLButtonElement
