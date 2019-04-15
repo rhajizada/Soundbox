@@ -33,6 +33,7 @@ fun Application.module(testing: Boolean = false) {
     val client = HttpClient(Apache)
 
     suspend fun getContext(url: String): String{
+        println("GETTING $url")
         return client.get<String>(url)
     }
 
@@ -45,6 +46,9 @@ fun Application.module(testing: Boolean = false) {
         var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+        if(albumArt.isNullOrBlank()){
+            albumArt = " "
+        }
         val response = "Song: ${x[0]}\nArtist: ${x[1]}\nAlbum: ${x[2]}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink"
         return response
     }

@@ -147,7 +147,7 @@ private fun parseResponse(x: String){
     var tidal = links[6].split("Tidal: ")[1]
     songCard.hidden = false
     artworkImage.src = artwork
-    songInfo.innerText = "$song by $artist from $album"
+    songInfo.innerHTML = "$song </br> $artist </br> $album"
     if(spotify.contains("spotify")){
         spotify_link.innerText = "Spotify"
         spotify_link.href = spotify
