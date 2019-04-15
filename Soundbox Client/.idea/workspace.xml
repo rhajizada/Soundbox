@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3df0640-659e-483a-8b12-c2ae16b6a1ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,8 +76,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -156,7 +154,7 @@
       <workItem from="1554423236127" duration="5617000" />
       <workItem from="1554500697148" duration="199000" />
       <workItem from="1554500967832" duration="23213000" />
-      <workItem from="1555302546258" duration="2925000" />
+      <workItem from="1555302546258" duration="3236000" />
     </task>
     <task id="LOCAL-00001" summary="Playing with the Kotlin/JS and learning abilities of Koltin manipulating DOM">
       <created>1551229011392</created>
@@ -193,15 +191,21 @@
       <option name="project" value="LOCAL" />
       <updated>1554782606576</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="FIXING SOME MINOR STUFF">
+      <created>1555309087074</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1555309087074</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56641000" />
+    <option name="totallyTimeSpent" value="56952000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.027377522" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -277,7 +281,8 @@
     <MESSAGE value="Figured out how to access the values inside forms" />
     <MESSAGE value="Fixed issue with CORS and added support for HTTP get request" />
     <MESSAGE value="Still Working on FrontEnd" />
-    <option name="LAST_COMMIT_MESSAGE" value="Still Working on FrontEnd" />
+    <MESSAGE value="FIXING SOME MINOR STUFF" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIXING SOME MINOR STUFF" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/out/production/Soundbox/Soundbox/Soundbox.js" />

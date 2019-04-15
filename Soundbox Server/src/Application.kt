@@ -11,7 +11,7 @@ import io.ktor.features.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.client.request.get
-
+val API_KEY = "AIzaSyCFrgO-Q52LzCjdz09GMTkLEI-BGb1DWoA"
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
