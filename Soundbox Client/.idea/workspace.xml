@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3df0640-659e-483a-8b12-c2ae16b6a1ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="f3df0640-659e-483a-8b12-c2ae16b6a1ee" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="48" column="81" selection-start-line="48" selection-start-column="81" selection-end-line="48" selection-end-column="81" />
+            <state relative-caret-position="893">
+              <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -154,7 +152,7 @@
       <workItem from="1554423236127" duration="5617000" />
       <workItem from="1554500697148" duration="199000" />
       <workItem from="1554500967832" duration="23213000" />
-      <workItem from="1555302546258" duration="3236000" />
+      <workItem from="1555302546258" duration="3380000" />
     </task>
     <task id="LOCAL-00001" summary="Playing with the Kotlin/JS and learning abilities of Koltin manipulating DOM">
       <created>1551229011392</created>
@@ -198,14 +196,22 @@
       <option name="project" value="LOCAL" />
       <updated>1555309087074</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Cleaning up front-end html">
+      <created>1555352237981</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1555352237981</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56952000" />
+    <option name="totallyTimeSpent" value="57096000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.027377522" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -282,7 +288,8 @@
     <MESSAGE value="Fixed issue with CORS and added support for HTTP get request" />
     <MESSAGE value="Still Working on FrontEnd" />
     <MESSAGE value="FIXING SOME MINOR STUFF" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIXING SOME MINOR STUFF" />
+    <MESSAGE value="Cleaning up front-end html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaning up front-end html" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/out/production/Soundbox/Soundbox/Soundbox.js" />
@@ -310,8 +317,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="48" column="81" selection-start-line="48" selection-start-column="81" selection-end-line="48" selection-end-column="81" />
+        <state relative-caret-position="893">
+          <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
         </state>
       </provider>
     </entry>
