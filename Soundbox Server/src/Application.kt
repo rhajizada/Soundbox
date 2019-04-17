@@ -48,6 +48,7 @@ fun Application.module(testing: Boolean = false) {
         val response = client.get<String>(url)
         val gson = GsonBuilder().create()
         val responseJSON = gson.fromJson(response, Response::class.java)
+        return responseJSON
     }
 
     suspend fun search(x: List<String>):String {
@@ -56,13 +57,22 @@ fun Application.module(testing: Boolean = false) {
         val tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
 
         val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
+        val appleAPISearch = "https://www.googleapis.com/customsearch/v1?q=apple+music+${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
+        val tidalAPISearch = "https://www.googleapis.com/customsearch/v1?q=tidal+${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
 
-        var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
-        var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
-        var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+//        var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+//        var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+//        var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
+        var spotifyResponse = getJSON(spotifyAPISeach)
+        var appleResponse = getJSON(appleAPISearch)
+        var tidalResponse = getJSON(tidalAPISearch)
+
+        val spotifySongLink = spotifyResponse.items[0].link
+        val appleSongLink = appleResponse.items[0].link
+        val tidalSongLink = tidalResponse.items[0].link
         var albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
 
-        getJSON(spotifyAPISeach)
+
 
         if(albumArt.isNullOrBlank()){
             albumArt = " "
