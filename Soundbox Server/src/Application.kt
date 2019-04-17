@@ -11,6 +11,9 @@ import io.ktor.features.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.client.request.get
+
+
+val API_KEY = "AIzaSyCFrgO-Q52LzCjdz09GMTkLEI-BGb1DWoA"
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
@@ -29,11 +32,17 @@ fun Application.module(testing: Boolean = false) {
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
 
-    val client = HttpClient(Apache)
+    val client = HttpClient(Apache) {
+
+    }
 
     suspend fun getContext(url: String): String{
         println("GETTING $url")
         return client.get<String>(url)
+    }
+    suspend fun getJSON(url: String){
+        val response = client.get<String>(url)
+        println(response.split("\n")[48])
     }
 
     suspend fun search(x: List<String>):String {
@@ -41,10 +50,15 @@ fun Application.module(testing: Boolean = false) {
         val appleSearchLink = "https://www.google.com/search?q=apple music ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
         val tidalSearchLink = "https://www.google.com/search?q=tidal ${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}".replace(' ', '+')
 
+        val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${x[0].sanitize()}+${x[1].sanitize()}+${x[2].sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
+
         var spotifySongLink = getContext(spotifySearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var appleSongLink = getContext(appleSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var tidalSongLink = getContext(tidalSearchLink).split('\n')[1].split("<ol><div class=")[1].split("&amp")[0].split("/url?q=")[1]
         var albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+
+        getJSON(spotifyAPISeach)
+
         if(albumArt.isNullOrBlank()){
             albumArt = " "
         }

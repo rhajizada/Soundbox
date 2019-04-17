@@ -27,7 +27,6 @@ val tidal_link = document.getElementById("tidal_link") as HTMLAnchorElement
 
 val authBtn = document.createElement("button") as HTMLButtonElement
 
-
 fun main(args: Array<String>) {
     songCard.hidden = true
     //tidal_input!!.placeholder = "I changed this using kotlin"
