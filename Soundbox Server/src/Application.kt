@@ -41,7 +41,6 @@ fun Application.module(testing: Boolean = false) {
     }
 
     suspend fun getContext(url: String): String{
-        println("GETTING $url")
         return client.get<String>(url)
     }
     suspend fun getJSON(url: String): Response{
