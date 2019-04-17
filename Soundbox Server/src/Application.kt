@@ -1,5 +1,6 @@
 package com.soundboxserver
 
+import com.google.gson.GsonBuilder
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -10,6 +11,7 @@ import kotlinx.html.*
 import io.ktor.features.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
+import io.ktor.client.features.json.*
 import io.ktor.client.request.get
 
 
@@ -33,16 +35,19 @@ fun Application.module(testing: Boolean = false) {
     }
 
     val client = HttpClient(Apache) {
-
+        install(JsonFeature) {
+            serializer = GsonSerializer()
+        }
     }
 
     suspend fun getContext(url: String): String{
         println("GETTING $url")
         return client.get<String>(url)
     }
-    suspend fun getJSON(url: String){
+    suspend fun getJSON(url: String): Response{
         val response = client.get<String>(url)
-        println(response.split("\n")[48])
+        val gson = GsonBuilder().create()
+        val responseJSON = gson.fromJson(response, Response::class.java)
     }
 
     suspend fun search(x: List<String>):String {
