@@ -1,4 +1,37 @@
 package com.soundboxserver
+class Song(){
+    lateinit var song: String
+    lateinit var artist: String
+    lateinit var album: String
+    constructor(song: String,artist: String,album: String) : this() {
+        this.song = song
+        this.artist = artist
+        this.song = song
+    }
+    constructor(platform: String, html: String) : this(){
+        var htmlList = html.split('\n')
+        if(platform.equals("spotify", false)){
+            this.song = (htmlList[2].split("<title>", "</title>")[1].split(", a song by ")[0].getRidOfWrong()) // Adding song name
+            this.artist = (htmlList[2].split("<title>", "</title>")[1].split(", a song by ")[1].split(" on Spotify")[0].getRidOfWrong()) // Adding Artist name
+            this.album = (htmlList[40].split("</a></div></section></div>")[0].split(">")[1].getRidOfWrong()) // Adding album name
+        }
+
+        if(platform.equals("apple", false)){
+            this.song = (htmlList[18].split("content=")[1].split(" by")[0].removeRange(0,1).getRidOfWrong()) // Song name works
+            this.artist = (htmlList[18].split("by ")[1].split('"')[0].getRidOfWrong()) // Artist name
+            this.album = (htmlList[14].split("listen, ")[1].split(", ${this.artist}")[0].getRidOfWrong()) // Album name testing
+        }
+        if(platform.equals("tidal", false)){
+            this.song = (htmlList[0].split("name")[18].removeRange(0..2).split("description")[0].reversed().removeRange(0..2).reversed().getRidOfWrong()) //Song name
+            this.artist = (htmlList[0].split("name")[20].split("artist-list-link hover-desktop")[1].split("</a>")[0].removeRange(0..1).getRidOfWrong()) //Artist name
+            this.album = (htmlList[0].split("name")[20].split("calc(33.33vw - 1.5rem), calc(100vw - 3rem)")[1].split(" class=")[0].removeRange(0..6).reversed().removeRange(0..0).reversed().getRidOfWrong()) //Album name
+        }
+
+    }
+    fun print(){
+        println("Song: ${this.song} Artist: ${this.artist} Album: ${this.album}")
+    }
+}
 
 class Response(val kind: String,val url: URL,val queries: Queries,val items: List<Item>){
     fun printItems(){
@@ -6,44 +39,79 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             i.print()
         }
     }
-    fun getSpotifyLink(): String{
+    fun getSpotifyLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items.asReversed()){
             if(i.link.contains("open.spotify.com/album") || i.link.contains("open.spotify.com/track")){
                 searchList.add(i)
             }
         }
-        println("Printing spotify links: ")
-        for(i in searchList){
-            println(i.link)
+//        for(i in searchList){
+//            if (!(i.snippet.contains(song.album))){
+//                searchList.remove(i)
+//            }
+//        }
+//        println("Printing spotify links: ")
+//        for(i in searchList){
+//            i.print()
+//            println("")
+//        }
+        if(searchList.isEmpty()){
+            return ""
         }
-        return searchList[0].link
+        else {
+            return searchList[0].link
+        }
     }
-    fun getAppleLink(): String{
+
+    fun getAppleLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items){
             if(i.link.contains("https://itunes.apple.com/us/album/") || i.link.contains("https://itunes.apple.com/us/track/")){
                 searchList.add(i)
             }
         }
-        println("Printing apple links: ")
-        for(i in searchList){
-            println(i.link)
+//        for(i in searchList){
+//            if (!i.snippet.contains(song.album)){
+//             searchList.remove(i)
+//            }
+//        }
+//        println("Printing apple links: ")
+//        for(i in searchList){
+//            i.print()
+//            println("")
+//        }
+        if(searchList.isEmpty()){
+            return ""
         }
-        return searchList[0].link
+        else {
+            return searchList[0].link
+        }
     }
-    fun getTidalLink(): String{
+    fun getTidalLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items){
-            if(i.link.contains("https://tidal.com/browse/album/") || i.link.contains("https://tidal.com/browse/track/")){
-
+            println(i.link)
+            if(i.link.contains("tidal.com/browse/") /*|| i.link.contains("tidal.com/browse/track/")*/){
+                searchList.add(i)
             }
         }
-        println("Printing tidal links: ")
-        for(i in searchList){
-            println(i.link)
+//        for(i in searchList){
+//            if (!i.snippet.contains(song.album)){
+//                searchList.remove(i)
+//            }
+//        }
+//        println("Printing tidal links: ")
+//        for(i in searchList){
+//            i.print()
+//            println("")
+//        }
+        if(searchList.isEmpty()){
+            return ""
         }
-        return searchList[0].link
+        else {
+            return items[0].link
+        }
     }
 }
 
