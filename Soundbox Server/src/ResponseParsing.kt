@@ -7,31 +7,43 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
         }
     }
     fun getSpotifyLink(): String{
-        var r: String = ""
+        var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items.asReversed()){
             if(i.link.contains("open.spotify.com/album") || i.link.contains("open.spotify.com/track")){
-                r = i.link
+                searchList.add(i)
             }
         }
-        return r
+        println("Printing spotify links: ")
+        for(i in searchList){
+            println(i.link)
+        }
+        return searchList[0].link
     }
     fun getAppleLink(): String{
-        var r: String = ""
+        var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items){
             if(i.link.contains("https://itunes.apple.com/us/album/") || i.link.contains("https://itunes.apple.com/us/track/")){
-                r = i.link
+                searchList.add(i)
             }
         }
-        return r
+        println("Printing apple links: ")
+        for(i in searchList){
+            println(i.link)
+        }
+        return searchList[0].link
     }
     fun getTidalLink(): String{
-        var r: String = ""
+        var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items){
             if(i.link.contains("https://tidal.com/browse/album/") || i.link.contains("https://tidal.com/browse/track/")){
-                r = i.link
+
             }
         }
-        return r
+        println("Printing tidal links: ")
+        for(i in searchList){
+            println(i.link)
+        }
+        return searchList[0].link
     }
 }
 

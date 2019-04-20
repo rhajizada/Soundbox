@@ -15,7 +15,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.request.get
 
 
-val API_KEY = "AIzaSyCFrgO-Q52LzCjdz09GMTkLEI-BGb1DWoA"
+val API_KEY = "" // Put your google custom search api key here
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
