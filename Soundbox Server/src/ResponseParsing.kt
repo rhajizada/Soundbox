@@ -71,8 +71,12 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
 
     fun getAppleLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
+        println("Apple links: ")
         for(i in items){
-            if(i.link.contains("https://itunes.apple.com/us/album/") || i.link.contains("https://itunes.apple.com/us/track/")){
+            println(i.link)
+        }
+        for(i in items){
+            if(i.link.contains("https://itunes.apple.com/") && ((i.link.contains("track") || (i.link.contains("album"))))){
                 searchList.add(i)
             }
         }
@@ -96,7 +100,6 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
     fun getTidalLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items){
-            println(i.link)
             if(i.link.contains("tidal.com/browse/") /*|| i.link.contains("tidal.com/browse/track/")*/){
                 searchList.add(i)
             }

@@ -62,11 +62,15 @@ fun Application.module(testing: Boolean = false) {
         val spotifySongLink = spotifyResponse.getSpotifyLink(song)
         val appleSongLink = appleResponse.getAppleLink(song)
         val tidalSongLink = tidalResponse.getTidalLink(song)
-        var albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+        println("Spotify: $spotifySongLink\nApple Music: $appleSongLink\nTidal: $tidalSongLink")
+        println()
+        var albumArt: String = ""
 
-
-        if(albumArt.isNullOrBlank()){
-            albumArt = " "
+        if(spotifySongLink.isNullOrEmpty()){
+            albumArt = (getContext(appleSongLink)).split("<source class=\"we-artwork__source\"")[1].split("<style>")[0].split(" 1x")[0].split("srcset=\"")[1]
+        }
+        else{
+            albumArt ="http://" + getContext(spotifySongLink).split("\n")[33].split("style=\"background-image:url(//")[1].split("),")[0]
         }
         val response = "Song: ${song.song}\nArtist: ${song.artist}\nAlbum: ${song.album}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink"
         return response
