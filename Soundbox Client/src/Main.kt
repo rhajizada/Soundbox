@@ -39,15 +39,18 @@ fun main(args: Array<String>) {
             window.alert("Search bar is empty")
         }
         else{
-        if(search_input.value.contains("open.spotify")){
+            if(search_input.value.contains("open.spotify")){
             SpotifyLink {response -> parseResponse(response)}
-        }
-        if(search_input.value.contains("itunes")){
+            }
+            if(search_input.value.contains("itunes")){
             AppleLink {response -> parseResponse(response)}
-        }
-        if(search_input.value.contains("tidal")){
+            }
+            if(search_input.value.contains("tidal")){
             TidalLink {response -> parseResponse(response)}
-        }
+            }
+            if(search_input.value.contains("deezer")){
+                DeezerLink {response -> parseResponse(response)}
+            }
     }
     })
 }
@@ -113,6 +116,26 @@ private fun TidalLink(callback: (String) -> Unit) {
         xmlHttp.send()
     }
 }
+
+private fun DeezerLink(callback: (String) -> Unit) {
+    val xmlHttp: dynamic = XMLHttpRequest()
+    if(xmlHttp) {
+        xmlHttp.open("GET", APILink+"/deezer") // Allows us easily bypass CORS
+        xmlHttp.withCredentials = true
+        println("trying to get deezer")
+        xmlHttp.setRequestHeader("deezer-link", search_input.value)
+        xmlHttp.onload = {
+            if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
+                callback.invoke(xmlHttp.responseText)
+            }
+            else{
+                window.alert("Song could not be parsed")
+            }
+        }
+        xmlHttp.send()
+    }
+}
+
 
 //private fun sendAll(){
 //    if(!tidal_input.value.isNullOrEmpty()){

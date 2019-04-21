@@ -26,6 +26,11 @@ class Song(){
             this.artist = (htmlList[0].split("name")[20].split("artist-list-link hover-desktop")[1].split("</a>")[0].removeRange(0..1).getRidOfWrong()) //Artist name
             this.album = (htmlList[0].split("name")[20].split("calc(33.33vw - 1.5rem), calc(100vw - 3rem)")[1].split(" class=")[0].removeRange(0..6).reversed().removeRange(0..0).reversed().getRidOfWrong()) //Album name
         }
+        if(platform.equals("deezer", false)){
+            this.song = (htmlList[25].split("content=\"")[1].split(" - ")[0]) // Song name
+            this.artist = (htmlList[25].split("content=\"")[1].split(" - ")[1])// Artist name
+            this.album = (htmlList[26].split(" - ")[1].split(". Deezer")[0]) // Album
+        }
 
     }
     fun print(){

@@ -14,7 +14,6 @@ import io.ktor.client.engine.apache.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.get
 
-
 val API_KEY = "" // Put your google custom search api key here
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -30,6 +29,7 @@ fun Application.module(testing: Boolean = false) {
         header("spotify-link")
         header("apple-link")
         header("tidal-link")
+        header("deezer-link")
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
@@ -79,16 +79,24 @@ fun Application.module(testing: Boolean = false) {
         get("/spotify"){
             println("Spotify link ${call.request.header("spotify-link")}")
             var songInfo = getSpotifySongInfo(getContext(call.request.header("spotify-link") as String))
+            songInfo.print()
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/apple"){
             println("Apple link ${call.request.header("apple-link")}")
             var songInfo = getAppleSongInfo(getContext(call.request.header("apple-link") as String))
+            songInfo.print()
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/tidal"){
             println("Tidal link ${call.request.header("tidal-link")}")
             var songInfo = getTidalSongInfo(getContext(call.request.header("tidal-link") as String))
+            songInfo.print()
+            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
+        }
+        get("/deezer"){
+            println("Deezer link ${call.request.header("deezer-link")}")
+            var songInfo = getDeezerSongInfo(getContext(call.request.header("deezer-link") as String))
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
     }
@@ -106,6 +114,11 @@ fun getAppleSongInfo(x: String): Song{
 fun getTidalSongInfo(x: String): Song{
    return Song("tidal", x)
 }
+
+fun getDeezerSongInfo(x: String): Song{
+    return Song("deezer", x)
+}
+
 fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
 fun String.sanitize(): String =  this.replace("#", "%23").replace(" ", "+")
 
