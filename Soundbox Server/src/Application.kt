@@ -54,15 +54,17 @@ fun Application.module(testing: Boolean = false) {
         val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
         val appleAPISearch = "https://www.googleapis.com/customsearch/v1?q=apple+music+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
         val tidalAPISearch = "https://www.googleapis.com/customsearch/v1?q=tidal+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
-        println(tidalAPISearch)
+        val deezerAPISearch = "https://www.googleapis.com/customsearch/v1?q=deezer+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
         var spotifyResponse = getJSON(spotifyAPISeach)
         var appleResponse = getJSON(appleAPISearch)
         var tidalResponse = getJSON(tidalAPISearch)
+        var deezerResponse = getJSON(deezerAPISearch)
 
         val spotifySongLink = spotifyResponse.getSpotifyLink(song)
         val appleSongLink = appleResponse.getAppleLink(song)
         val tidalSongLink = tidalResponse.getTidalLink(song)
-        println("Spotify: $spotifySongLink\nApple Music: $appleSongLink\nTidal: $tidalSongLink")
+        val deezerSongLink = deezerResponse.getDeezerLink(song)
+        println("Spotify: $spotifySongLink\nApple Music: $appleSongLink\nTidal: $tidalSongLink\nDeezer: $deezerSongLink")
         println()
         var albumArt: String = ""
 
@@ -72,7 +74,7 @@ fun Application.module(testing: Boolean = false) {
         else{
             albumArt ="http://" + getContext(spotifySongLink).split("\n")[33].split("style=\"background-image:url(//")[1].split("),")[0]
         }
-        val response = "Song: ${song.song}\nArtist: ${song.artist}\nAlbum: ${song.album}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink"
+        val response = "Song: ${song.song}\nArtist: ${song.artist}\nAlbum: ${song.album}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink\nDeezer: $deezerSongLink"
         return response
     }
 

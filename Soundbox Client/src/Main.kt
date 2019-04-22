@@ -19,20 +19,16 @@ val songInfo = document.getElementById("song_info") as HTMLHeadingElement
 val spotify_link = document.getElementById("spotify_link") as HTMLAnchorElement
 val apple_link = document.getElementById("apple_link") as HTMLAnchorElement
 val tidal_link = document.getElementById("tidal_link") as HTMLAnchorElement
+val deezer_link = document.getElementById("deezer_link") as HTMLAnchorElement
 
 //val submitBtn = document.createElement("button") as HTMLButtonElement
 
 //    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 
 
-val authBtn = document.createElement("button") as HTMLButtonElement
 
 fun main(args: Array<String>) {
     songCard.hidden = true
-    //tidal_input!!.placeholder = "I changed this using kotlin"
-    authBtn.className = "btn btn-primary"
-    authBtn.type = "submit"
-    authBtn.innerText = "Spotify Authentificate"
     search_button.addEventListener("click", {
         println(search_input.value)
         if(search_input.value.isNullOrEmpty()){
@@ -136,28 +132,6 @@ private fun DeezerLink(callback: (String) -> Unit) {
     }
 }
 
-
-//private fun sendAll(){
-//    if(!tidal_input.value.isNullOrEmpty()){
-//        if(!(tidal_input.value.contains("https://"))){
-//            tidal_input.value = "https://" + tidal_input.value
-//        }
-//        TidalLink { response -> parseResponse(response)}
-//    }
-//    if(!spotify_input.value.isNullOrEmpty()){
-//        if(!(spotify_input.value.contains("https://"))){
-//            spotify_input.value = "https://" + spotify_input.value
-//        }
-//        SpotifyLink { response -> parseResponse(response)}
-//    }
-//    if(!apple_input.value.isNullOrEmpty()){
-//        if(!(apple_input.value.contains("https://"))){
-//            apple_input.value = "https://" + apple_input.value
-//        }
-//        AppleLink  { response -> parseResponse(response)}
-//    }
-//}
-
 private fun parseResponse(x: String){
     var links = x.split("\n")
     var song = links[0].split("Song: ")[1]
@@ -167,6 +141,7 @@ private fun parseResponse(x: String){
     var spotify = links[4].split("Spotify: ")[1]
     var apple = links[5].split("Apple: ")[1]
     var tidal = links[6].split("Tidal: ")[1]
+    var deezer = links[7].split("Deezer: ")[1]
     songCard.hidden = false
     artworkImage.src = artwork
     songInfo.innerHTML = "$song </br> $artist </br> $album"
@@ -191,10 +166,17 @@ private fun parseResponse(x: String){
     else{
         apple_link.innerText = "Song could not be found on Apple Music"
     }
+    if(deezer.contains("deezer")){
+        deezer_link.innerText = "Deezer"
+        deezer_link.href = deezer
+    }
+    else{
+        deezer_link.innerText = "Song could not be found on Deezer"
+    }
 
 
 
-    println("Song: $song\nArtist: $artist\nAlbum: $album\nArtwork: $artwork\nSpotify: $spotify\nApple: $apple\nTidal: $tidal")
+    println("Song: $song\nArtist: $artist\nAlbum: $album\nArtwork: $artwork\nSpotify: $spotify\nApple: $apple\nTidal: $tidal\nDeezer: $deezer")
 }
 
 

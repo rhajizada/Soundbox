@@ -47,7 +47,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
     fun getSpotifyLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
         for(i in items.asReversed()){
-            if(i.link.contains("open.spotify.com/album") || i.link.contains("open.spotify.com/track")){
+            if(i.link.contains("open.spotify.com/album") || i.link.contains("open.spotify.com/track") || i.link.contains("open.spotify.com/user")){
                 searchList.add(i)
             }
         }
@@ -71,10 +71,6 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
 
     fun getAppleLink(song: Song): String{
         var searchList: MutableList<Item> = mutableListOf<Item>()
-        println("Apple links: ")
-        for(i in items){
-            println(i.link)
-        }
         for(i in items){
             if(i.link.contains("https://itunes.apple.com/") && ((i.link.contains("track") || (i.link.contains("album"))))){
                 searchList.add(i)
@@ -119,6 +115,30 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
         }
         else {
             return items[0].link
+        }
+    }
+    fun getDeezerLink(song: Song): String{
+        var searchList: MutableList<Item> = mutableListOf<Item>()
+        for(i in items){
+            if(i.link.contains("www.deezer.com") && ((i.link.contains("track") || (i.link.contains("album"))))){
+                searchList.add(i)
+            }
+        }
+//        for(i in searchList){
+//            if (!i.snippet.contains(song.album)){
+//             searchList.remove(i)
+//            }
+//        }
+//        println("Printing apple links: ")
+//        for(i in searchList){
+//            i.print()
+//            println("")
+//        }
+        if(searchList.isEmpty()){
+            return ""
+        }
+        else {
+            return searchList[0].link
         }
     }
 }
