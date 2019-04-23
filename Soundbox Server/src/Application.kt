@@ -10,11 +10,13 @@ import io.ktor.html.*
 import kotlinx.html.*
 import io.ktor.features.*
 import io.ktor.client.*
+import io.ktor.client.call.call
 import io.ktor.client.engine.apache.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.get
 
 val API_KEY = "" // Put your google custom search api key here
+val CX = "" // Put your google custom seasrch cx code here
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
@@ -35,26 +37,34 @@ fun Application.module(testing: Boolean = false) {
     }
 
     val client = HttpClient(Apache) {
+        expectSuccess = false
         install(JsonFeature) {
             serializer = GsonSerializer()
         }
     }
 
     suspend fun getContext(url: String): String{
-        return client.get<String>(url)
+        var response = client.get<String>(url)
+        if(response.isNullOrEmpty()){
+            println("Cant get response from $url")
+        }
+        return response
     } // Makes simple get request and returns html od site as string
     suspend fun getJSON(url: String): Response{
         val response = client.get<String>(url)
+        if(response.isNullOrEmpty()){
+            println("Cant get response from $url")
+        }
         val gson = GsonBuilder().create()
         val responseJSON = gson.fromJson(response, Response::class.java)
         return responseJSON
     } // Makes get request and returns JSON as Response object
 
     suspend fun search(song: Song):String {
-        val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
-        val appleAPISearch = "https://www.googleapis.com/customsearch/v1?q=apple+music+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
-        val tidalAPISearch = "https://www.googleapis.com/customsearch/v1?q=tidal+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
-        val deezerAPISearch = "https://www.googleapis.com/customsearch/v1?q=deezer+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=008255740316595556921%3Ap6hob4sk9xk&key=${API_KEY}"
+        val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
+        val appleAPISearch = "https://www.googleapis.com/customsearch/v1?q=apple+music+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
+        val tidalAPISearch = "https://www.googleapis.com/customsearch/v1?q=tidal+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
+        val deezerAPISearch = "https://www.googleapis.com/customsearch/v1?q=deezer+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
         var spotifyResponse = getJSON(spotifyAPISeach)
         var appleResponse = getJSON(appleAPISearch)
         var tidalResponse = getJSON(tidalAPISearch)
@@ -65,7 +75,6 @@ fun Application.module(testing: Boolean = false) {
         val tidalSongLink = tidalResponse.getTidalLink(song)
         val deezerSongLink = deezerResponse.getDeezerLink(song)
         println("Spotify: $spotifySongLink\nApple Music: $appleSongLink\nTidal: $tidalSongLink\nDeezer: $deezerSongLink")
-        println()
         var albumArt: String = ""
 
         if(spotifySongLink.isNullOrEmpty()){
@@ -83,26 +92,26 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("hello", contentType = ContentType.Text.Html)
         }
         get("/spotify"){
-            println("Spotify link ${call.request.header("spotify-link")}")
-            var songInfo = getSpotifySongInfo(getContext(call.request.header("spotify-link") as String))
+            println("Spotify link ${call.request.header("spotify-link")?.fixLink()}")
+            var songInfo = getSpotifySongInfo(getContext(((call.request.header("spotify-link") as String).fixLink())))
             songInfo.print()
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/apple"){
-            println("Apple link ${call.request.header("apple-link")}")
-            var songInfo = getAppleSongInfo(getContext(call.request.header("apple-link") as String))
+            println("Apple link ${call.request.header("apple-link")?.fixLink()}")
+            var songInfo = getAppleSongInfo(getContext((call.request.header("apple-link") as String).fixLink()))
             songInfo.print()
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/tidal"){
-            println("Tidal link ${call.request.header("tidal-link")}")
-            var songInfo = getTidalSongInfo(getContext(call.request.header("tidal-link") as String))
+            println("Tidal link ${call.request.header("tidal-link")?.fixLink()}")
+            var songInfo = getTidalSongInfo(getContext((call.request.header("tidal-link") as String).fixLink()))
             songInfo.print()
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/deezer"){
-            println("Deezer link ${call.request.header("deezer-link")}")
-            var songInfo = getDeezerSongInfo(getContext(call.request.header("deezer-link") as String))
+            println("Deezer link ${call.request.header("deezer-link")?.fixLink()}")
+            var songInfo = getDeezerSongInfo(getContext((call.request.header("deezer-link") as String).fixLink()))
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
     }
@@ -127,6 +136,7 @@ fun getDeezerSongInfo(x: String): Song{
 
 fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
 fun String.sanitize(): String =  this.replace("#", "%23").replace(" ", "+")
+fun String.fixLink(): String = this.replace("https", "http")
 
 
 

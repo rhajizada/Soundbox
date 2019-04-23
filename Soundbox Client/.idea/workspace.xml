@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3df0640-659e-483a-8b12-c2ae16b6a1ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Soundbox/Soundbox/root-package.kjsm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Soundbox Server/src/Application.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Soundbox Server/src/ResponseParsing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Soundbox Server/src/ResponseParsing.kt" afterDir="false" />
@@ -38,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="178" column="141" selection-start-line="178" selection-start-column="141" selection-end-line="178" selection-end-column="141" />
+            <state relative-caret-position="427">
+              <caret line="127" column="52" selection-start-line="127" selection-start-column="52" selection-end-line="127" selection-end-column="52" />
               <folding>
                 <element signature="e#0#71#0" expanded="true" />
               </folding>
@@ -165,6 +162,7 @@
       <workItem from="1555302546258" duration="4805000" />
       <workItem from="1555457537805" duration="10160000" />
       <workItem from="1555810319343" duration="6315000" />
+      <workItem from="1555964128146" duration="838000" />
     </task>
     <task id="LOCAL-00001" summary="Playing with the Kotlin/JS and learning abilities of Koltin manipulating DOM">
       <created>1551229011392</created>
@@ -219,10 +217,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74996000" />
+    <option name="totallyTimeSpent" value="75834000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.027377522" />
@@ -329,8 +327,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="178" column="141" selection-start-line="178" selection-start-column="141" selection-end-line="178" selection-end-column="141" />
+        <state relative-caret-position="427">
+          <caret line="127" column="52" selection-start-line="127" selection-start-column="52" selection-end-line="127" selection-end-column="52" />
           <folding>
             <element signature="e#0#71#0" expanded="true" />
           </folding>

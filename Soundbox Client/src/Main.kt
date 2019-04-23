@@ -125,7 +125,7 @@ private fun DeezerLink(callback: (String) -> Unit) {
                 callback.invoke(xmlHttp.responseText)
             }
             else{
-                window.alert("Song could not be parsed")
+                window.alert("Server did not respond")
             }
         }
         xmlHttp.send()
