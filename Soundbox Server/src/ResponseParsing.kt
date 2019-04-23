@@ -3,10 +3,10 @@ class Song(){
     lateinit var song: String
     lateinit var artist: String
     lateinit var album: String
-    constructor(song: String,artist: String,album: String) : this() {
+    constructor(song: String, artist: String, album: String) : this() {
         this.song = song
         this.artist = artist
-        this.song = song
+        this.album = album
     }
     constructor(platform: String, html: String) : this(){
         var htmlList = html.split('\n')
