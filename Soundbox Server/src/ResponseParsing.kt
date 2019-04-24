@@ -72,6 +72,13 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
                 }
             }
             if (searchList.isEmpty()) {
+                for (i in items.asReversed()) {
+                    if (i.link.contains("open.spotify.com/playlist")) {
+                        searchList.add(i)
+                    }
+                }
+            }
+            if (searchList.isEmpty()) {
                 return " "
             }
             else {
@@ -86,7 +93,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             var searchList: MutableList<Item> = mutableListOf<Item>()
             for (i in items)
             {
-                if (i.link.contains("https://itunes.apple.com/") && (i.link.contains("track")))
+                if (i.link.contains(".apple.com/") && (i.link.contains("track")))
                 {
                     searchList.add(i)
                 }
@@ -95,7 +102,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             {
                 for (i in items)
                 {
-                    if (i.link.contains("https://itunes.apple.com/") && (i.link.contains("album")))
+                    if (i.link.contains(".apple.com/") && (i.link.contains("album")))
                     {
                         searchList.add(i)
                     }

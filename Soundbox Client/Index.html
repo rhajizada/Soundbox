@@ -22,6 +22,11 @@
         </div>
     </div>
 </div>
+<div class="text-center">
+    <div class="spinner-border text-primary" id="loader" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
         <div class="card" id="song_card" style="width: 22rem;">
         <img class="card-img-top" id="artwork" src="..." alt="Album Artwork">
         <div class="card-body">
@@ -34,7 +39,6 @@
             <li class="list-group-item"><a href="" id="deezer_link">Deezer Link</a></li>
         </ul>
     </div>
-</div>
 
 <!-- Additional CSS control -->
 <style>
@@ -45,6 +49,12 @@
         vertical-align: middle;
         margin-top: 2%;
         text-align: center;
+    }
+    #loader {
+        width: 5rem;
+        height: 5rem;
+        margin-top: 3%;
+
     }
 </style>
 <!-- Importing all the dependencies -->

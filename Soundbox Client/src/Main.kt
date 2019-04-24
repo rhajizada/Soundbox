@@ -1,6 +1,7 @@
 import org.w3c.dom.*
 import kotlin.browser.*
 import kotlin.dom.addClass
+import kotlin.dom.createElement
 
 external class XMLHttpRequest
 var xhttp :dynamic= XMLHttpRequest(); // Adding native JavaScript library for http calls
@@ -14,15 +15,18 @@ val spotify_link = document.getElementById("spotify_link") as HTMLAnchorElement
 val apple_link = document.getElementById("apple_link") as HTMLAnchorElement
 val tidal_link = document.getElementById("tidal_link") as HTMLAnchorElement
 val deezer_link = document.getElementById("deezer_link") as HTMLAnchorElement
+val loader = document.getElementById("loader") as HTMLDivElement
 
 fun main(args: Array<String>) {
     songCard.hidden = true
+    loader.hidden = true
     search_button.addEventListener("click", {
         println(search_input.value)
         if(search_input.value.isNullOrEmpty()){
             window.alert("Search bar is empty")
         }
         else{
+            loader.hidden = false
             if(search_input.value.contains("open.spotify")){
                 checkSong(search_input.value, "spotify"){response -> parseResponse(response)}
 
@@ -42,6 +46,7 @@ fun main(args: Array<String>) {
 
 // Example of async request
 private fun checkSong(link: String, platform: String, callback: (String) -> Unit) {
+    songCard.hidden = true
     val xmlHttp: dynamic = XMLHttpRequest()
     if(xmlHttp) {
         xmlHttp.open("GET", APILink+"/song") // Allows us easily bypass CORS
@@ -61,6 +66,7 @@ private fun checkSong(link: String, platform: String, callback: (String) -> Unit
 }
 
 private fun parseResponse(x: String){
+    loader.hidden = true
     var links = x.split("\n")
     var song = links[0].split("Song: ")[1]
     var artist = links[1].split("Artist: ")[1]
@@ -87,7 +93,7 @@ private fun parseResponse(x: String){
     else{
         tidal_link.innerText = "Song could not be found on Tidal"
     }
-    if(apple.contains("itunes")){
+    if(apple.contains("apple")){
         apple_link.innerText = "Apple Music"
         apple_link.href = apple
     }
