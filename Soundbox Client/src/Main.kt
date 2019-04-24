@@ -118,7 +118,6 @@ private fun DeezerLink(callback: (String) -> Unit) {
     if(xmlHttp) {
         xmlHttp.open("GET", APILink+"/deezer") // Allows us easily bypass CORS
         xmlHttp.withCredentials = true
-        println("trying to get deezer")
         xmlHttp.setRequestHeader("deezer-link", search_input.value)
         xmlHttp.onload = {
             if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {

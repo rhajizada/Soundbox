@@ -28,6 +28,8 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
         header(HttpHeaders.Authorization)
+        header("link")
+        header("platform")
         header("spotify-link")
         header("apple-link")
         header("tidal-link")
@@ -89,7 +91,14 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         get("/") {
+
             call.respondText("hello", contentType = ContentType.Text.Html)
+        }
+        get("/song"){
+            val platform = call.request.header("platform") as String
+            val link = (call.request.header("link") as String).fixLink()
+            val songInfo = Song(platform, getContext(link))
+            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
         get("/spotify"){
             println("Spotify link ${call.request.header("spotify-link")?.fixLink()}")
@@ -121,6 +130,7 @@ fun Application.module(testing: Boolean = false) {
 fun getSpotifySongInfo(x: String): Song{
     return Song("spotify", x)
 }
+
 
 fun getAppleSongInfo(x: String): Song{
     return Song("apple", x)
