@@ -4,15 +4,9 @@ import kotlin.dom.addClass
 
 external class XMLHttpRequest
 var xhttp :dynamic= XMLHttpRequest(); // Adding native JavaScript library for http calls
-//val main_card = document.getElementById("main_card") as HTMLDivElement
-//val spotify_input = document.getElementById("spotify_input") as HTMLInputElement
-//val apple_input = document.getElementById("apple_input") as HTMLInputElement
-//val tidal_input = document.getElementById("tidal_input") as HTMLInputElement
 val APILink: String = "http://localhost:8080"
-
 var search_input = document.getElementById("search") as HTMLInputElement
 val search_button = document.getElementById("search_button") as HTMLButtonElement
-
 val songCard = document.getElementById("song_card") as HTMLDivElement
 val artworkImage = document.getElementById("artwork") as HTMLImageElement
 val songInfo = document.getElementById("song_info") as HTMLHeadingElement
@@ -20,12 +14,6 @@ val spotify_link = document.getElementById("spotify_link") as HTMLAnchorElement
 val apple_link = document.getElementById("apple_link") as HTMLAnchorElement
 val tidal_link = document.getElementById("tidal_link") as HTMLAnchorElement
 val deezer_link = document.getElementById("deezer_link") as HTMLAnchorElement
-
-//val submitBtn = document.createElement("button") as HTMLButtonElement
-
-//    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-
-
 
 fun main(args: Array<String>) {
     songCard.hidden = true
@@ -36,89 +24,30 @@ fun main(args: Array<String>) {
         }
         else{
             if(search_input.value.contains("open.spotify")){
-            SpotifyLink {response -> parseResponse(response)}
+                checkSong(search_input.value, "spotify"){response -> parseResponse(response)}
+
             }
             if(search_input.value.contains("itunes")){
-            AppleLink {response -> parseResponse(response)}
+                checkSong(search_input.value, "apple"){response -> parseResponse(response)}
             }
             if(search_input.value.contains("tidal")){
-            TidalLink {response -> parseResponse(response)}
+                checkSong(search_input.value, "tidal"){response -> parseResponse(response)}
             }
             if(search_input.value.contains("deezer")){
-                DeezerLink {response -> parseResponse(response)}
+                checkSong(search_input.value, "deezer"){response -> parseResponse(response)}
             }
     }
     })
 }
 
-
-
-
-
 // Example of async request
-
-
-
-private fun SpotifyLink(callback: (String) -> Unit) {
+private fun checkSong(link: String, platform: String, callback: (String) -> Unit) {
     val xmlHttp: dynamic = XMLHttpRequest()
     if(xmlHttp) {
-        xmlHttp.open("GET", APILink+"/spotify") // Allows us easily bypass CORS
+        xmlHttp.open("GET", APILink+"/song") // Allows us easily bypass CORS
         xmlHttp.withCredentials = true
-        xmlHttp.setRequestHeader("spotify-link", search_input.value)
-        xmlHttp.onload = {
-            if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
-                callback.invoke(xmlHttp.responseText)
-            }
-            else{
-                window.alert("Song could not be parsed")
-            }
-        }
-        xmlHttp.send()
-    }
-}
-
-private fun AppleLink(callback: (String) -> Unit) {
-    val xmlHttp: dynamic = XMLHttpRequest()
-    if(xmlHttp) {
-        xmlHttp.open("GET", APILink+"/apple") // Allows us easily bypass CORS
-        xmlHttp.withCredentials = true
-        xmlHttp.setRequestHeader("apple-link", search_input.value)
-        xmlHttp.onload = {
-            if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
-                callback.invoke(xmlHttp.responseText)
-            }
-            else{
-                window.alert("Song could not be parsed")
-            }
-        }
-        xmlHttp.send()
-    }
-}
-
-private fun TidalLink(callback: (String) -> Unit) {
-    val xmlHttp: dynamic = XMLHttpRequest()
-    if(xmlHttp) {
-        xmlHttp.open("GET", APILink+"/tidal") // Allows us easily bypass CORS
-        xmlHttp.withCredentials = true
-        xmlHttp.setRequestHeader("tidal-link", search_input.value)
-        xmlHttp.onload = {
-            if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
-                callback.invoke(xmlHttp.responseText)
-            }
-            else{
-                window.alert("Song could not be parsed")
-            }
-        }
-        xmlHttp.send()
-    }
-}
-
-private fun DeezerLink(callback: (String) -> Unit) {
-    val xmlHttp: dynamic = XMLHttpRequest()
-    if(xmlHttp) {
-        xmlHttp.open("GET", APILink+"/deezer") // Allows us easily bypass CORS
-        xmlHttp.withCredentials = true
-        xmlHttp.setRequestHeader("deezer-link", search_input.value)
+        xmlHttp.setRequestHeader("link", link)
+        xmlHttp.setRequestHeader("platform", platform)
         xmlHttp.onload = {
             if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
                 callback.invoke(xmlHttp.responseText)
@@ -172,9 +101,6 @@ private fun parseResponse(x: String){
     else{
         deezer_link.innerText = "Song could not be found on Deezer"
     }
-
-
-
     println("Song: $song\nArtist: $artist\nAlbum: $album\nArtwork: $artwork\nSpotify: $spotify\nApple: $apple\nTidal: $tidal\nDeezer: $deezer")
 }
 

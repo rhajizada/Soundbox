@@ -90,37 +90,10 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-
-            call.respondText("hello", contentType = ContentType.Text.Html)
-        }
         get("/song"){
             val platform = call.request.header("platform") as String
             val link = (call.request.header("link") as String).fixLink()
             val songInfo = Song(platform, getContext(link))
-            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
-        }
-        get("/spotify"){
-            println("Spotify link ${call.request.header("spotify-link")?.fixLink()}")
-            var songInfo = getSpotifySongInfo(getContext(((call.request.header("spotify-link") as String).fixLink())))
-            songInfo.print()
-            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
-        }
-        get("/apple"){
-            println("Apple link ${call.request.header("apple-link")?.fixLink()}")
-            var songInfo = getAppleSongInfo(getContext((call.request.header("apple-link") as String).fixLink()))
-            songInfo.print()
-            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
-        }
-        get("/tidal"){
-            println("Tidal link ${call.request.header("tidal-link")?.fixLink()}")
-            var songInfo = getTidalSongInfo(getContext((call.request.header("tidal-link") as String).fixLink()))
-            songInfo.print()
-            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
-        }
-        get("/deezer"){
-            println("Deezer link ${call.request.header("deezer-link")?.fixLink()}")
-            var songInfo = getDeezerSongInfo(getContext((call.request.header("deezer-link") as String).fixLink()))
             call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
         }
     }
