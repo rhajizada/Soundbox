@@ -2,6 +2,7 @@ import org.w3c.dom.*
 import kotlin.browser.*
 import kotlin.dom.addClass
 import kotlin.dom.createElement
+import kotlin.js.Json
 
 external class XMLHttpRequest
 var xhttp :dynamic= XMLHttpRequest(); // Adding native JavaScript library for http calls
@@ -68,14 +69,14 @@ private fun checkSong(link: String, platform: String, callback: (String) -> Unit
 private fun parseResponse(x: String){
     loader.hidden = true
     var links = x.split("\n")
-    var song = links[0].split("Song: ")[1]
-    var artist = links[1].split("Artist: ")[1]
-    var album = links[2].split("Album: ")[1]
-    var artwork = links[3].split("Artwork: ")[1]
-    var spotify = links[4].split("Spotify: ")[1]
-    var apple = links[5].split("Apple: ")[1]
-    var tidal = links[6].split("Tidal: ")[1]
-    var deezer = links[7].split("Deezer: ")[1]
+    var song = links[1].split("Song: ")[1]
+    var artist = links[2].split("Artist: ")[1]
+    var album = links[3].split("Album: ")[1]
+    var artwork = links[4].split("Artwork: ")[1]
+    var spotify = links[5].split("Spotify: ")[1]
+    var apple = links[6].split("Apple: ")[1]
+    var tidal = links[7].split("Tidal: ")[1]
+    var deezer = links[8].split("Deezer: ")[1]
     songCard.hidden = false
     artworkImage.src = artwork
     songInfo.innerHTML = "$song </br> $artist </br> $album"

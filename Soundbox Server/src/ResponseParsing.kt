@@ -1,5 +1,5 @@
 package com.soundboxserver
-class Song(){
+class SongInfo(){
     lateinit var song: String
     lateinit var artist: String
     lateinit var album: String
@@ -40,14 +40,13 @@ class Song(){
         println("Song: ${this.song} Artist: ${this.artist} Album: ${this.album}")
     }
 }
-
-class Response(val kind: String,val url: URL,val queries: Queries,val items: List<Item>) {
+class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items: List<Item>) {
     fun printItems() {
         for (i in items) {
             i.print()
         }
     }
-    fun getSpotifyLink(song: Song): String {
+    fun getSpotifyLink(song: SongInfo): String {
         if (items.isNullOrEmpty()) {
             return ""
         } else {
@@ -86,7 +85,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             }
         }
     }
-    fun getAppleLink(song: Song): String{
+    fun getAppleLink(song: SongInfo): String{
         if(items.isNullOrEmpty()) {
             return ""
         } else {
@@ -118,7 +117,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             }
         }
     }
-    fun getTidalLink(song: Song): String{
+    fun getTidalLink(song: SongInfo): String{
         if(items.isNullOrEmpty())
         {
             return ""
@@ -153,7 +152,7 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
             }
         }
     }
-    fun getDeezerLink(song: Song): String {
+    fun getDeezerLink(song: SongInfo): String {
         if (items.isNullOrEmpty())
         {
             return ""
@@ -189,8 +188,6 @@ class Response(val kind: String,val url: URL,val queries: Queries,val items: Lis
         }
     }
 }
-
-
 class URL(val type: String,val template: String)
 class Queries(val requests: List<Request>,val nextPages: List<NextPage>)
 class Request(val title: String,val totalResults: String,val searchTerms: String,val count: Int,val startIndex: Int,val inputEncoding: String,val outputEncoding: String,val safe: String,val cx: String)
@@ -198,5 +195,20 @@ class NextPage(val title: String,val totalResults: String,val searchTerms: Strin
 class Item(val kind: String,val title: String,val htmlTitle: String,val link: String,val displayLink: String,val snippet: String,val htmlSnippet: String,val cache_id: String,val formattedUrl: String,val htmlFormattedUrl: String){
     fun print(){
         println("Kind: $kind\nTitle: $title\nhtmlTitle: ${htmlTitle}\nlink: $link\ndisplayLink: $displayLink\nsnippet: $snippet\nhtmlSnippet: ${htmlSnippet}\ncache_id: $cache_id\nformattedUrl: $formattedUrl\nhtmlFormattedUrl: $htmlFormattedUrl")
+    }
+}
+
+class SongData(val info: SongInfo,val artwork: String, val spotify: String,val apple: String, val tidal: String, val deezer: String){
+    override fun toString(): String {
+        return "{\n" +
+                "Song: ${info.song}\n" +
+                "Artist: ${info.artist}\n" +
+                "Album: ${info.album}\n" +
+                "Artwork: $artwork\n" +
+                "Spotify: $spotify\n" +
+                "Apple: $apple\n" +
+                "Tidal: $tidal\n" +
+                "Deezer: $deezer\n" +
+                "}"
     }
 }

@@ -52,17 +52,17 @@ fun Application.module(testing: Boolean = false) {
         }
         return response
     } // Makes simple get request and returns html od site as string
-    suspend fun getJSON(url: String): Response{
+    suspend fun getJSON(url: String): JSONResponse{
         val response = client.get<String>(url)
         if(response.isNullOrEmpty()){
             println("Cant get response from $url")
         }
         val gson = GsonBuilder().create()
-        val responseJSON = gson.fromJson(response, Response::class.java)
+        val responseJSON = gson.fromJson(response, JSONResponse::class.java)
         return responseJSON
     } // Makes get request and returns JSON as Response object
 
-    suspend fun search(song: Song):String {
+    suspend fun search(song: SongInfo):SongData {
         val spotifyAPISeach = "https://www.googleapis.com/customsearch/v1?q=spotify+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
         val appleAPISearch = "https://www.googleapis.com/customsearch/v1?q=apple+music+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
         val tidalAPISearch = "https://www.googleapis.com/customsearch/v1?q=tidal+${song.song.sanitize()}+${song.artist.sanitize()}+${song.album.sanitize()}&cx=${CX}&key=${API_KEY}"
@@ -76,7 +76,6 @@ fun Application.module(testing: Boolean = false) {
         val appleSongLink = appleResponse.getAppleLink(song)
         val tidalSongLink = tidalResponse.getTidalLink(song)
         val deezerSongLink = deezerResponse.getDeezerLink(song)
-        println("Spotify: $spotifySongLink\nApple Music: $appleSongLink\nTidal: $tidalSongLink\nDeezer: $deezerSongLink")
         var albumArt: String = ""
 
         if(spotifySongLink.isNullOrEmpty()){
@@ -85,36 +84,20 @@ fun Application.module(testing: Boolean = false) {
         else{
             albumArt ="http://" + getContext(spotifySongLink).split("\n")[33].split("style=\"background-image:url(//")[1].split("),")[0]
         }
-        val response = "Song: ${song.song}\nArtist: ${song.artist}\nAlbum: ${song.album}\nArtwork: ${albumArt}\nSpotify: ${spotifySongLink}\nApple: $appleSongLink\nTidal: $tidalSongLink\nDeezer: $deezerSongLink"
-        return response
+        val Response = SongData(song, albumArt, spotifySongLink, appleSongLink, tidalSongLink, deezerSongLink)
+        println(Response.toString())
+        return Response
     }
 
     routing {
         get("/song"){
             val platform = call.request.header("platform") as String
             val link = (call.request.header("link") as String).fixLink()
-            val songInfo = Song(platform, getContext(link))
-            call.respondText(search(songInfo), contentType = ContentType.Text.Plain)
+            val songInfo = SongInfo(platform, getContext(link))
+            call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
         }
     }
 
-}
-
-fun getSpotifySongInfo(x: String): Song{
-    return Song("spotify", x)
-}
-
-
-fun getAppleSongInfo(x: String): Song{
-    return Song("apple", x)
-}
-
-fun getTidalSongInfo(x: String): Song{
-   return Song("tidal", x)
-}
-
-fun getDeezerSongInfo(x: String): Song{
-    return Song("deezer", x)
 }
 
 fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
