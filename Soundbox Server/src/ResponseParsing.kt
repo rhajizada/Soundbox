@@ -50,6 +50,10 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
         if (items.isNullOrEmpty()) {
             return ""
         } else {
+            println("Spotify search links")
+            for(i in items){
+                println(i.link)
+            }
             var searchList: MutableList<Item> = mutableListOf<Item>()
             for (i in items.asReversed()) {
                 if (i.link.contains("open.spotify.com/track")) {
@@ -89,6 +93,10 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
         if(items.isNullOrEmpty()) {
             return ""
         } else {
+            println("Apple search links")
+            for(i in items){
+                println(i.link)
+            }
             var searchList: MutableList<Item> = mutableListOf<Item>()
             for (i in items)
             {
@@ -124,6 +132,10 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
         }
         else
         {
+            println("Tidal search links")
+            for(i in items){
+                println(i.link)
+            }
             var searchList: MutableList<Item> = mutableListOf<Item>()
             for (i in items)
             {
@@ -159,6 +171,10 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
         }
         else
         {
+            println("Deezer search links")
+            for(i in items){
+                println(i.link)
+            }
             var searchList: MutableList<Item> = mutableListOf<Item>()
             for (i in items)
             {
@@ -179,8 +195,19 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
             }
             if (searchList.isEmpty())
             {
+                for (i in items)
+                {
+                    if (i.link.contains("www.deezer.com") && i.link.contains("artist"))
+                    {
+                        searchList.add(i)
+                    }
+                }
+            }
+            if (searchList.isEmpty())
+            {
                 return ""
             }
+
             else
             {
                 return searchList[0].link

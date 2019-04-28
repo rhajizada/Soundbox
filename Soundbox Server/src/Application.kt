@@ -96,9 +96,41 @@ fun Application.module(testing: Boolean = false) {
             val songInfo = SongInfo(platform, getContext(link))
             call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
         }
+//        get("/song-card"){
+//            val platform = call.request.header("platform") as String
+//            val link = (call.request.header("link") as String).fixLink()
+//            val songInfo = SongInfo(platform, getContext(link))
+//            val songData = search(songInfo)
+//            call.respondHtml {
+//                head{
+//                    title="Soundbox"
+//                    link("https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css", "stylesheet")
+//                    script("javascript", "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"){}
+//                }
+//                body{
+//                    div("row"){
+//                        div("col s12 m7"){
+//                            div("card small"){
+//                                div("card-image"){
+//                                    img("Album Artwork", songData.artwork, "")
+//                                    span("card-title"){
+//                                        +songInfo.song
+//                                        br
+//                                        +songInfo.artist
+//                                        br
+//                                        +songInfo.album
+//                                    }
+//                                }
+//                                div("card-content"){
+//                                }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+        }
     }
-
-}
 
 fun String.getRidOfWrong(): String =  this.replace("&#039;", "'").replace("&amp;", "&").replace("&quot;", "\"")
 fun String.sanitize(): String =  this.replace("#", "%23").replace(" ", "+")
