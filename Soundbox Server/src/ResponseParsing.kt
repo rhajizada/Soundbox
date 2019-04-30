@@ -117,6 +117,16 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
             }
             if (searchList.isEmpty())
             {
+                for (i in items)
+                {
+                    if (i.link.contains(".apple.com/") && (i.link.contains("artist")))
+                    {
+                        searchList.add(i)
+                    }
+                }
+            }
+            if (searchList.isEmpty())
+            {
                 return ""
             }
             else
@@ -187,7 +197,7 @@ class JSONResponse(val kind: String,val url: URL,val queries: Queries,val items:
             {
                 for (i in items)
                 {
-                    if (i.link.contains("www.deezer.com") && i.link.contains("album"))
+                    if (i.link.contains("www.deezer.com/album"))
                     {
                         searchList.add(i)
                     }

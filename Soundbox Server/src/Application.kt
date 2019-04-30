@@ -91,10 +91,18 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         get("/song"){
-            val platform = call.request.header("platform") as String
-            val link = (call.request.header("link") as String).fixLink()
-            val songInfo = SongInfo(platform, getContext(link))
-            call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
+            try{
+                val platform = call.request.header("platform") as String
+                val link = (call.request.header("link") as String).fixLink()
+                val songInfo = SongInfo(platform, getContext(link))
+                call.respondText(search(songInfo).toString(), contentType = ContentType.Text.Plain)
+            }
+            catch(e: java.lang.IndexOutOfBoundsException){
+                call.respond(HttpStatusCode(401, "Index out of Bond"), "Problem with link")
+            }
+            catch(e: java.net.ConnectException){
+                call.respond(HttpStatusCode(402, "Wrong formatted Link"), "Link formatted wrong")
+            }
         }
 //        get("/song-card"){
 //            val platform = call.request.header("platform") as String

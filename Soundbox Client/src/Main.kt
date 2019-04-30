@@ -28,18 +28,23 @@ fun main(args: Array<String>) {
         }
         else{
             loader.hidden = false
-            if(search_input.value.contains("open.spotify")){
-                checkSong(search_input.value, "spotify"){response -> parseResponse(response)}
-
+            if(search_input.value.contains("open.spotify") || search_input.value.contains("itunes") || search_input.value.contains("tidal") || search_input.value.contains("deezer")){
+                if(search_input.value.contains("open.spotify")){
+                    checkSong(search_input.value, "spotify"){response -> parseResponse(response)}
+                    }
+                if(search_input.value.contains("itunes")){
+                    checkSong(search_input.value, "apple"){response -> parseResponse(response)}
+                }
+                if(search_input.value.contains("tidal")){
+                    checkSong(search_input.value, "tidal"){response -> parseResponse(response)}
+                }
+                if(search_input.value.contains("deezer")){
+                    checkSong(search_input.value, "deezer"){response -> parseResponse(response)}
+                }
             }
-            if(search_input.value.contains("itunes")){
-                checkSong(search_input.value, "apple"){response -> parseResponse(response)}
-            }
-            if(search_input.value.contains("tidal")){
-                checkSong(search_input.value, "tidal"){response -> parseResponse(response)}
-            }
-            if(search_input.value.contains("deezer")){
-                checkSong(search_input.value, "deezer"){response -> parseResponse(response)}
+            else{
+                window.alert("Fix the link")
+                loader.hidden = true
             }
     }
     })
@@ -58,8 +63,17 @@ private fun checkSong(link: String, platform: String, callback: (String) -> Unit
             if (xmlHttp.readyState == 4.toShort() && xmlHttp.status == 200.toShort()) {
                 callback.invoke(xmlHttp.responseText)
             }
+            else if (xmlHttp.status == 401.toShort()){
+                window.alert("Problem with link")
+                loader.hidden = true
+            }
+            else if(xmlHttp.status == 402.toShort()){
+                window.alert("Link not formatted properly")
+                loader.hidden = true
+            }
             else{
                 window.alert("Server did not respond")
+                loader.hidden = true
             }
         }
         xmlHttp.send()
