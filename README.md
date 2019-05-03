@@ -28,7 +28,7 @@ And navigate to localhost:8000 on your browser
 If you want to write your own client for the server you can do it since server is essentially a RESTFul API.
 ***How to use***
 ```
-curl --header "platform: $platform" --header "link: $link" http://localhost:8080/song-info
+curl --header "platform: $platform" --header "link: $link" http://localhost:8080/song
 ```
 Response you will get will be formatted in this way:
 
