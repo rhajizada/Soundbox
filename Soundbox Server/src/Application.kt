@@ -30,10 +30,6 @@ fun Application.module(testing: Boolean = false) {
         header(HttpHeaders.Authorization)
         header("link")
         header("platform")
-        header("spotify-link")
-        header("apple-link")
-        header("tidal-link")
-        header("deezer-link")
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }

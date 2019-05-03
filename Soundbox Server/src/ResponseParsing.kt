@@ -234,7 +234,6 @@ class Item(val kind: String,val title: String,val htmlTitle: String,val link: St
         println("Kind: $kind\nTitle: $title\nhtmlTitle: ${htmlTitle}\nlink: $link\ndisplayLink: $displayLink\nsnippet: $snippet\nhtmlSnippet: ${htmlSnippet}\ncache_id: $cache_id\nformattedUrl: $formattedUrl\nhtmlFormattedUrl: $htmlFormattedUrl")
     }
 }
-
 class SongData(val info: SongInfo,val artwork: String, val spotify: String,val apple: String, val tidal: String, val deezer: String){
     override fun toString(): String {
         return "{\n" +
